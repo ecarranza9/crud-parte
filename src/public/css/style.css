@@ -1,0 +1,10 @@
+body{
+    background-image: url(../img/img1.jpg);
+    background-size: 100%;
+    background-attachment: fixed;
+}
+
+th#hsExtTh{
+    display: none;
+}
+

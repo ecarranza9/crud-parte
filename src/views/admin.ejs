@@ -1,0 +1,98 @@
+<%- include ('partials/_header');  %> 
+
+<%console.log(horas) %>
+
+<div class="container-fluid">
+
+    <div class="card mx-auto">
+    
+        <div class="card-body">
+
+            <h1>Hola, <%=user.usuario%></h1>
+            <p>Eres el administrador!!!</p>
+
+        </div>
+
+
+    </div>
+
+
+
+<div class="col-md-12 pt-4">
+
+    <div class="card">
+    <!--Tabla-->
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+    <th>N°</th>
+    <th>Usuario</th>
+    <th>Fecha</th>
+   
+    
+    
+    
+    </thead>
+    <tbody>
+
+
+    <% for(var i = 0; i < parts.length; i++){ %>
+    <!-- ANDA, pero faltaria ver cuando se eliminan todos los partes el array se desarma-->
+        <tr>
+           <td><%=i + 1%></td>
+            <td><%= parts[i].usuario  %> </td>
+            <td class="fecha"><%= parts[i].fecha %> </td>
+
+        </tr>
+    
+    
+        <% } %> 
+
+        
+
+    </tbody>
+    
+    
+    
+    
+    
+    </table>
+    
+    </div>
+
+</div>
+    
+   
+
+
+    
+
+
+
+
+    
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%- include ('partials/_footer');  %> 

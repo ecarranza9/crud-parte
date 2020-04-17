@@ -1,0 +1,63 @@
+<%- include ('partials/_header');  %> 
+
+<pre>
+    <%=console.log(tasks[0]._id)%>
+</pre>
+
+   
+   <div class="row justify-content-center align-items-center minh-100">
+
+
+
+         <div class="col-md-6 align-items-center pt-4">
+
+            
+
+            <div class="card">
+
+               <form action="/listaks/edit/<%=id%>/<%=idTask%>" method="POST">
+
+    <div class="form-group">
+       <label for="">Orden de trabajo</label>
+       <input type="text" name="ot"  class = "form-control" value="<%=tasks[0].ot%>">
+    </div>
+
+    <div class="form-group">
+      <label for="">Interno</label>
+      <input type="text" name="interno"  class = "form-control" value="<%=tasks[0].interno%>">
+   </div>
+
+   <div class="form-group">
+      <label for="">Codigo de tarea</label>
+      <input type="text" name="cod"  class = "form-control" value="<%=tasks[0].cod%>">
+   </div>
+
+   <div class="form-group">
+      <label for="">Descripcion de tarea</label>
+      <textarea name="description" id="" cols="80" class="form-control" value="<%=tasks[0].description%>"></textarea>
+   </div>
+
+   <div class="form-group">
+      <label for="">Horas dedicadas </label>
+      <input type="number" name="hs"  class = "form-control" value="<%=tasks[0].hs%>">
+   </div>
+
+    
+    <button type="submit" class="btn btn-expand btn-success">Guardar parte</button>
+    
+
+
+       </form>
+
+      </div>
+
+      </div>
+
+
+
+      </div>
+
+         
+         
+
+<%- include ('partials/_footer');  %> 

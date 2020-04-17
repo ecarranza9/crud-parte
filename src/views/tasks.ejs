@@ -1,0 +1,150 @@
+<%- include ('partials/_header');  %> 
+
+
+
+<div class="container-fluid">
+
+    <div class="card mx-auto">
+    
+        <div class="card-body">
+
+            <h1>Hola, <%=user.usuario%></h1>
+            <p>Puedes continuar con el dia de hoy...</p>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+      
+
+<div class="container-fluid">
+   
+    <div class="row">
+
+        <div class="col-md-6 pt-4">
+        
+            <div class="card">
+        <div class="card-body">
+        
+            <form action="/add" method="POST">
+
+                <div class="form-group">
+                    <label for="">Fecha</label>
+                   <input type="date" name="fecha" class="form-control" value="">
+                </div>
+
+                <button type="submit" class="btn btn-primary">+</button>
+
+            </form>
+         
+           
+
+        </div>
+
+            </div>
+  
+
+        </div>
+
+
+        
+<div class="col-md-6 pt-4">
+
+    <div class="card">
+    <!--Tabla-->
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+    <th>N°</th>
+    <th>Usuario</th>
+    <th>Fecha</th>
+    <th>Horas totales</th>
+    <th>Edicion</th>
+    <th id="hsExtTh">Horas Extras</th>    
+    </tr>
+    
+    
+    
+    
+    </thead>
+    <tbody>
+
+
+    <% for(var i = 0; i < parts.length; i++){ %>
+    <!-- ANDA, pero faltaria ver cuando se eliminan todos los partes el array se desarma-->
+        <tr>
+           <td><%=i + 1%></td>
+            <td><%= parts[i].usuario  %> </td>
+            <td class="fecha"><%= parts[i].fecha %> </td>
+            <% if(horas[i].total_horas == 0) { %>
+                <td>-</td>
+            <% } else if(horas[i]._id == parts[i].fecha){ %> 
+                <td class="hs"><%= horas[i].total_horas  %> </td> 
+               <% } %> 
+            <td>
+                <a class="btn btn-success" href="/tasks/<%= parts[i]._id%>">+ Tareas</a>
+                <a class="btn btn-dark" href="/listaks/<%= parts[i]._id%>">Ver tareas</a>
+            
+            </td>
+
+            <td id="hsExtTd">
+
+                <% if(horas[i].total_horas > 8.5) { %>
+                   
+                   <% const horasExt = horas[i].total_horas - 8.5; %>
+
+                  <%=horasExt %>
+                    
+               <% } %>
+            </td>
+
+    
+
+        </tr>
+    
+    
+        <% } %> 
+
+        
+
+    </tbody>
+    
+    
+    
+    
+    
+    </table>
+    
+    </div>
+
+</div>
+    
+    </div>
+    
+    
+    </div>
+
+
+    
+
+
+
+
+    
+
+
+</div>
+
+
+
+
+
+
+<%- include ('partials/_footer');  %> 
+
+
+
+    

@@ -1,0 +1,64 @@
+<%- include ('partials/_header');  %> 
+
+
+
+   
+   <div class="row">
+
+
+
+         <div class="col-md-6 pt-4">
+
+            
+
+            <div class="card">
+
+               <form action="/addtask" method="POST">
+
+    <div class="form-group pt-5">
+       <label for="">Orden de trabajo</label>
+       <input type="text" name="ot"  class = "form-control" value="234">
+    </div>
+
+    <div class="form-group">
+      <label for="">Interno</label>
+      <input type="text" name="interno"  class = "form-control" value="81154">
+   </div>
+
+   <div class="form-group">
+      <label for="">Codigo de tarea</label>
+      <input type="text" name="cod"  class = "form-control" value="TD">
+   </div>
+
+   <div class="form-group">
+      <label for="">Descripcion de tarea</label>
+      <textarea name="description" id="" cols="80" class="form-control"></textarea>
+   </div>
+
+   <div class="form-group">
+      <label for="">Horas dedicadas </label>
+      <input type="number" name="hs"  class = "form-control">
+   </div>
+
+   
+
+    <input class="form-control" name="_id" value="<%= part._id %>" style="display: none;">
+    
+    <button type="submit" class="btn btn-expand btn-success">Agregar parte</button>
+    
+
+
+       </form>
+
+      </div>
+
+      </div>
+
+
+
+      </div>
+
+         
+         
+
+<%- include ('partials/_footer');  %> 

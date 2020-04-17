@@ -1,0 +1,82 @@
+<%- include ('partials/_header');  %> 
+
+
+<pre>
+<%=id%>
+
+</pre>
+
+<div class="col-md-6 pt-4">
+
+    <div class="card">
+    <!--Tabla-->
+    <table class="table table-bordered">
+    <thead>
+    <tr>
+    <th>Tareas</th>
+    <th>N° OT</th>
+    <th>Interno</th>
+    <th>Codigo de tarea</th>
+    <th>Descripcion</th>
+    <th>Horas</th>
+    <th>Edicion</th>
+    </tr>
+    
+    
+    
+    
+    </thead>
+    <tbody>
+
+       
+        
+
+
+
+
+    <% for(var i = 0; i < tasks.length; i++){ %>
+    
+        <tr>
+            <td><%= i + 1  %> </td>
+            <td><%= tasks[i].ot  %> </td>
+            <td><%= tasks[i].interno %> </td>
+            <td><%= tasks[i].cod %> </td>
+            <td><%= tasks[i].description %> </td>
+            <td><%= tasks[i].hs %> </td>
+        
+
+            
+            <td>
+                <a  class="btn btn-danger" href="/listaks/delete/<%=id %>/<%= tasks[i]._id%> ">Eliminar tarea</a>
+                <a  class="btn btn-success" href="/listaks/edit/<%=id %>/<%= tasks[i]._id%> ">Editar tarea</a>
+                
+
+            </td>
+            
+        </tr>
+        
+    
+        <% } %> 
+
+        
+
+    </tbody>
+    
+    
+    
+    
+    
+    </table>
+    
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<%- include ('partials/_footer');  %> 

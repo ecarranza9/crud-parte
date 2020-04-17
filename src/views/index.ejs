@@ -1,0 +1,49 @@
+<%- include ('partials/_header');  %> 
+
+
+<% if(error.length > 0) { %> 
+    <% for(let err of error){ %> 
+      
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" id="error">
+                <%=err.text%> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+              </div>
+    
+    <% } %>
+    
+    <%}%>  
+
+
+<div class="container">
+
+<div class="jumbotron mt-4">
+
+    <h1 class="display-4">App carga de partes diarios</h1>
+    <p class="lead">Esta aplicacion permite registrar las tareas diarias de un tecnico y sus horas realizadas.
+    </p>
+    <hr class="my-4">
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur, vel assumenda? Eum quidem placeat quod, 
+    reiciendis, qui, eos facere labore consectetur vel animi vitae! Exercitationem veniam sapiente voluptatem aliquid commodi?</p>
+    
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<%- include ('partials/_footer');  %> 
