@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 
 //Rutas para acceder desde el navegador y ejecutar los distintos metodos (Funciona como controlador)
-
+ 
 //Me traigo el modelo de la base de datos para realizar operaciones
 
 const Part = require('../models/part');
