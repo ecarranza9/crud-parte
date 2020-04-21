@@ -8,3 +8,14 @@ th#hsExtTh{
     display: none;
 }
 
+button{
+    transition: all 1s ease;
+}
+button:hover::before{
+    width: 100%;
+}
+
+.menu_activo {
+    background-color: grey;
+  
+}

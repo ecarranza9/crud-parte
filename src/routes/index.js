@@ -31,6 +31,9 @@ router.get('/', (req, res) =>{
 //ruta task, una vez identificado el usuario
 
 router.get('/tasks', isAuthenticated, async (req,res) =>{
+    
+   
+    const err = 0;
     const {id} = req.params;
     const parts =  await Part.find({usuario: req.user.usuario}).sort({'fecha': -1})
     
@@ -51,7 +54,7 @@ const horas = await Part.aggregate([
 
 
     res.render('tasks', {
-         
+        err:err,
         parts:parts,
         horas:horas 
     })
@@ -60,6 +63,20 @@ const horas = await Part.aggregate([
 //agrego parte diario -
 
 router.post('/add', isAuthenticated, async (req,res) =>{
+    const err = [];
+    const fecha = req.body.fecha;
+    const parts = 0;
+
+    if(fecha.length <= 0){
+        err.push({text:'Debe colocar la fecha para avanzar'})
+    }
+
+    if(err.length > 0){
+        res.render('tasks',
+        {fecha,err,parts:parts})
+    } 
+
+else{
     const  nuevo_part = new Part({
         _id: req.body._id,
         usuario: req.user.usuario,
@@ -72,16 +89,17 @@ res.render('addtask', {
     nuevo_part : nuevo_part,
 
 })
+}
 })
 
-/*
-Eliminar objeto padre
-router.get('/delete/:id', async(req,res) =>{
+
+
+router.get('/tasks/delete/:id', async(req,res) =>{
     const { id } = req.params;
     await Part.remove({_id: id});
     res.redirect('/tasks')
 })
-*/
+
 
 
 
@@ -104,6 +122,8 @@ router.get('/addtask', isAuthenticated, function(req,res){
 
 
     router.post('/addtask', isAuthenticated, function(req,res) {
+
+       
         const  nuevo_part = new Part({
             _id: req.body._id,
             usuario: req.user.usuario,

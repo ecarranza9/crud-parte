@@ -25,11 +25,21 @@ $(document).ready(function() {
 
  }
 
+ //Agrega estilos a pestaña activa (Navbar)
+ var url = window.location.pathname;
+ var filename = url.substring(url.lastIndexOf('/')+1);8
+ $(".menu_activo").removeClass("menu_activo");
+
+ if(url == "/"){
+  $('.nav-link[href="/"]').addClass("menu_activo");
+ } else{
+  $(".menu_activo").removeClass("menu_activo");
+  $('.nav-link[href="../users/' + filename + '"]').addClass("menu_activo");
+ }
 
 
+//manejo de restricciones (Fecha) 
 
-
-  
 
 
 
