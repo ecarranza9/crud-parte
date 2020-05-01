@@ -49,9 +49,10 @@ router.get('/users/signup', (req,res) =>{
        const newUser = new User({usuario, password});
         newUser.password = await newUser.encryptPassword(password);
         await newUser.save();
-       
+        
+        req.flash('success_msg', 'Se ha registrado correctamente'); 
         res.redirect('/users/signin');     
-        req.flash('success_msg', 'Se ha registrado correctamente');     
+           
     }   
 }
 )

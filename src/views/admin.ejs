@@ -22,12 +22,16 @@
 
     <div class="card">
     <!--Tabla-->
-    <table class="table table-bordered">
+    <table id="tblData" class="table table-bordered">
     <thead>
     <tr>
-    <th>N°</th>
     <th>Usuario</th>
     <th>Fecha</th>
+    <th>OT</th>
+    <th>Interno</th>
+    <th>Codigo de tareas</th>
+    <th>Descripcion</th>
+    <th>HS</th>
    
     
     
@@ -36,19 +40,38 @@
     <tbody>
 
 
-    <% for(var i = 0; i < parts.length; i++){ %>
-    <!-- ANDA, pero faltaria ver cuando se eliminan todos los partes el array se desarma-->
-        <tr>
-           <td><%=i + 1%></td>
-            <td><%= parts[i].usuario  %> </td>
-            <td class="fecha"><%= parts[i].fecha %> </td>
+        
 
+
+    <% for(var i = 0; i < parts.length; i++){ %> 
+        
+
+            <%for(var j = 0; j < parts[i].tasks.length; j++){%>
+
+
+            <%if(parts[i].tasks.length == 0){%>
+            <td><%=parts[i].user%></td>
+            <td><%=parts[i].fecha%></td>    
+            <%}else if(parts[i].tasks.length > 1){%>
+                <td><%=parts[i].user%></td>
+                <td><%=parts[i].fecha%></td> 
+            <%}else if(parts[i].tasks.length  <= 1){%>
+                <td><%=parts[i].user%></td>
+                <td><%=parts[i].fecha%></td>  
+            <%}%>
+
+           <td><%=parts[i].tasks[j].ot%></td>
+           <td><%=parts[i].tasks[j].interno%></td>
+           <td><%=parts[i].tasks[j].cod%></td>
+           <td><%=parts[i].tasks[j].description%></td>
+           <td><%=parts[i].tasks[j].hs%></td>
+            
         </tr>
-    
-    
+        
         <% } %> 
 
-        
+   
+        <% } %> 
 
     </tbody>
     
@@ -62,7 +85,15 @@
 
 </div>
     
+<br>
+
+<button  class="btn-export btn btn-success pt-3">Exporta a Excel</button>
    
+
+
+</div>
+
+
 
 
     
@@ -74,8 +105,6 @@
 
 
 </div>
-
-
 
 
 

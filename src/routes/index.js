@@ -16,6 +16,8 @@ const { isAuthenticated }  = require('../helpers/auth');
 
 
 
+
+
 //primera ruta, la home
 
 router.get('/', (req, res) =>{
@@ -31,19 +33,19 @@ router.get('/', (req, res) =>{
 //ruta task, una vez identificado el usuario
 
 router.get('/tasks', isAuthenticated, async (req,res) =>{
-    
-   
     const err = 0;
     const {id} = req.params;
-    const parts =  await Part.find({usuario: req.user.usuario}).sort({'fecha': -1})
+    const parts =  await Part.find({user: req.user.id}).sort({'fecha': -1}) 
+    const user = req.user
     
+
     //Agrego el acumulador de horas, " en unwind coloco la coleccion de docu"
 const horas = await Part.aggregate([ 
-        {$match:{ usuario : req.user.usuario}}, 
+        {$match:{ user : req.user.id}}, 
         {$unwind: {path: '$tasks',preserveNullAndEmptyArrays: true}},
         {$group: {
             _id: "$fecha",
-            "total_horas":{$sum: "$tasks.hs" },
+            "total_horas": {$sum: "$tasks.hs" },
              
         }},
         {$sort:{_id: -1}}
@@ -53,7 +55,10 @@ const horas = await Part.aggregate([
 
 
 
+
+
     res.render('tasks', {
+        user:user,  
         err:err,
         parts:parts,
         horas:horas 
@@ -63,34 +68,53 @@ const horas = await Part.aggregate([
 //agrego parte diario -
 
 router.post('/add', isAuthenticated, async (req,res) =>{
-    const err = [];
-    const fecha = req.body.fecha;
-    const parts = 0;
 
-    if(fecha.length <= 0){
-        err.push({text:'Debe colocar la fecha para avanzar'})
-    }
+    const parts =  await Part.find({user: req.user.id}).sort({'fecha': -1})  
+    
 
-    if(err.length > 0){
-        res.render('tasks',
-        {fecha,err,parts:parts})
-    } 
 
-else{
+    //Agrego el acumulador de horas, " en unwind coloco la coleccion de docu"
+const horas = await Part.aggregate([ 
+        {$match:{ user : req.user.id}}, 
+        {$unwind: {path: '$tasks',preserveNullAndEmptyArrays: true}},
+        {$group: {
+            _id: "$fecha",
+            "total_horas": {$sum: "$tasks.hs" },
+             
+        }},
+        {$sort:{_id: -1}}
+        
+    ])
+
+    
     const  nuevo_part = new Part({
         _id: req.body._id,
-        usuario: req.user.usuario,
-        fecha: req.body.fecha    
+        fecha: req.body.fecha,
+    })
+
+nuevo_part.user = req.user._id
+
+await nuevo_part.save(function (err) {
+
+    if(err){
+        res.render('tasks', {err,parts,horas})
+    }else{
+        res.render('addtask', {
+            nuevo_part : nuevo_part,
+        });
+
+    }
+
+
+
+
 });
 
-await nuevo_part.save();
-res.render('addtask', {
 
-    nuevo_part : nuevo_part,
 
-})
-}
-})
+});
+
+
 
 
 
@@ -106,10 +130,12 @@ router.get('/tasks/delete/:id', async(req,res) =>{
 router.get('/addtask', isAuthenticated, function(req,res){
     const  nuevo_part = new Part({
         _id: req.body._id,
-        usuario: req.user.usuario,
         fecha: req.body.fecha
+       
                 
 });
+nuevo_part.user = req.user.id
+
     
 
     res.render('addtask', {
@@ -126,11 +152,13 @@ router.get('/addtask', isAuthenticated, function(req,res){
        
         const  nuevo_part = new Part({
             _id: req.body._id,
-            usuario: req.user.usuario,
             fecha: req.body.fecha,
                     
     });
+ 
 
+
+   nuevo_part.user = req.user.id
    
       
     Part.update({ _id: req.body._id}, {
@@ -146,8 +174,8 @@ router.get('/addtask', isAuthenticated, function(req,res){
         }},
     
     
-    function(error){
-        if(error) { 
+    function(err){
+        if(err) { 
             return res.json({
                 success: false,
                 msj: req.body
@@ -155,6 +183,7 @@ router.get('/addtask', isAuthenticated, function(req,res){
         } else {
             
             console.log(req.body);
+            req.flash('success_msg','Ok, has cargado un parte');
             res.redirect('/tasks')
             
                
@@ -170,7 +199,7 @@ router.get('/addtask', isAuthenticated, function(req,res){
 
 router.get('/listaks/:id', isAuthenticated, async (req,res) =>{
     const {id} = req.params;
-    const parts =  await Part.find({usuario: req.user.usuario})
+    const parts =  await Part.find({user: req.user.id})
    const tasks = await Part.distinct("tasks",{_id: id});
    
   
@@ -255,9 +284,6 @@ router.post('/listaks/edit/:id/:idTask', isAuthenticated, async(req,res)=>{
         "tasks.$.description": req.body.description,
         "tasks.$.hs": req.body.hs,
 
-    
-    
-    
     
     }
     

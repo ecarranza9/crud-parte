@@ -4,9 +4,8 @@ const Schema = mongoose.Schema;
 
 
 const PartSchema = new Schema({
-
-    usuario: String,
-    fecha: String,
+    user:{type:String},
+    fecha: {type: String, required:[true,'La fecha es requerida']},
     tasks: [{
      ot: String,
      interno: String,

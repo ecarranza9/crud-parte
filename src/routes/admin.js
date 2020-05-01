@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 //Me traigo el modelo de la base de datos para realizar operaciones
 
 const Part = require('../models/part');
+const User = require('../models/user')
 const { isAuthenticated }  = require('../helpers/auth');
 
 
@@ -38,7 +39,7 @@ router.post('/admin', isAuthenticated, (req,res) =>{
 
 router.get('/admin', isAuthenticated, async (req,res) =>{
     const error = [];
-    const user = req.user;
+    const user = req.user
 
     if(user.role == 'regular'){
      
@@ -56,7 +57,7 @@ router.get('/admin', isAuthenticated, async (req,res) =>{
         const horas = await Part.aggregate([ 
             {$unwind: {path: '$tasks',preserveNullAndEmptyArrays: true}},
             {$group: {
-                _id: "$usuario",
+                _id: "$user.id",
                 "total_horas":{$sum: "$tasks.hs" },
                  
             }},
@@ -64,11 +65,14 @@ router.get('/admin', isAuthenticated, async (req,res) =>{
             
         ])    
     const parts = await Part.find()
-    const user = req.user;
+    const tasks = await Part.distinct("tasks",{});
+    const users = await User.find()
     res.render('admin',{
+      tasks:tasks,
       horas:horas,  
       parts:parts,  
-      user:user
+      user:user,
+      users:users
     });
     }
 

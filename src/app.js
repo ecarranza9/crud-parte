@@ -6,6 +6,7 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
 
+
 const passport =require('passport');
 
 //importar rutas 
@@ -38,7 +39,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash());
+app.use(flash())
 
 
 app.use((req,res,next)=>{
