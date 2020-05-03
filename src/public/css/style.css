@@ -1,8 +1,7 @@
 body{
     background-image: url(../img/img1.jpg);
-    background-size: cover;
+    background-size: 100%;
     background-attachment: fixed;
-    background-repeat: no-repeat;
 }
 
 th#hsExtTh{
@@ -17,6 +16,6 @@ button:hover::before{
 }
 
 .menu_activo {
-    background-color: tr;
+    background-color: grey;
   
 }

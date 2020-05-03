@@ -40,11 +40,9 @@
     <tbody>
 
 
-        <%for(let user in users){%>
-  <%if(users[user].id == '5eaaee0724952024605b85c3') {%>
-        <%console.log(users[user].usuario) %>
-<%}%>
-<%}%>
+        
+
+
     <% for(var i = 0; i < parts.length; i++){ %> 
         
 
@@ -52,25 +50,13 @@
 
 
             <%if(parts[i].tasks.length == 0){%>
-                <%for(let user in users){%>
-                    <%if(users[user].id == parts[i].user) {%>
-                          <td><%=users[user].usuario%></td>
-                  <%}%>
-                  <%}%>
+            <td><%=parts[i].user%></td>
             <td><%=parts[i].fecha%></td>    
             <%}else if(parts[i].tasks.length > 1){%>
-                <%for(let user in users){%>
-                    <%if(users[user].id == parts[i].user) {%>
-                          <td><%=users[user].usuario%></td>
-                  <%}%>
-                  <%}%>
+                <td><%=parts[i].user%></td>
                 <td><%=parts[i].fecha%></td> 
             <%}else if(parts[i].tasks.length  <= 1){%>
-                <%for(let user in users){%>
-                    <%if(users[user].id == parts[i].user) {%>
-                          <td><%=users[user].usuario%></td>
-                  <%}%>
-                  <%}%>
+                <td><%=parts[i].user%></td>
                 <td><%=parts[i].fecha%></td>  
             <%}%>
 
