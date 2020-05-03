@@ -19,7 +19,7 @@ require('./config/passport');
 
 //conexion a la base de datos.
 mongoose.Promise = global.Promise;
- mongoose.connect('mongodb://localhost:27017/prueba')
+ mongoose.connect('mongodb+srv://elian:elian123@cluster0-5sgb1.mongodb.net/test?retryWrites=true&w=majority')
  .then(() =>{
      console.log("conexion realizada a la base de datos.")
  })
