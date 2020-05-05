@@ -15,7 +15,7 @@
 
                <div class="card-header">Formulario de Tareas</div>
 
-               <form action="/addtask" method="POST">
+               <form id="form_part"action="/addtask" method="POST">
 
     <div class="form-group">
        <label for="">Orden de trabajo</label>
@@ -24,22 +24,29 @@
 
     <div class="form-group">
       <label for="">Interno</label>
-      <input type="text" name="interno"  class = "form-control" value="81154">
+      <input id="form_interno" type="text" name="interno"  class = "form-control" value="81154" required>
    </div>
 
    <div class="form-group">
       <label for="">Codigo de tarea</label>
-      <input type="text" name="cod"  class = "form-control" value="TD">
+      <br>
+      <select name="cod" id="">
+         <option value="RC">RC - Reparaciones en campo</option>
+         <option value="TD">TD - Reparaciones en Taller (Sede)</option>
+         <option value="TR">TR - Tareas Generales Taller (Sede)</option>
+         <option value="IE">IE - Instrucciones entregas cliente</option>
+         <option value="TT">TT - Tiempo Translado</option>
+      </select>
    </div>
 
    <div class="form-group">
       <label for="">Descripcion de tarea</label>
-      <textarea name="description" id="" cols="80" class="form-control"></textarea>
+      <textarea name="description" id="" cols="80" class="form-control"required></textarea>
    </div>
 
    <div class="form-group">
       <label for="">Horas dedicadas </label>
-      <input type="number" name="hs"  class = "form-control" required>
+      <input type="float" name="hs"  class = "form-control" required>
    </div>
 
 

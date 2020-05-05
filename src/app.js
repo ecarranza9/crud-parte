@@ -1,10 +1,12 @@
 const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
+require('dotenv').config();
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
+
 
 
 const passport =require('passport');
@@ -17,9 +19,10 @@ const adminRouter = require('./routes/admin')
 const app = express();
 require('./config/passport');
 
-//conexion a la base de datos.
-mongoose.Promise = global.Promise;
- mongoose.connect('mongodb+srv://elian:elian123@cluster0-5sgb1.mongodb.net/test?retryWrites=true&w=majority')
+//var mongoDB = 'mongodb://localhost:27017/prueba'
+var mongoDB = process.env.MONGO_URI;
+mongoose.Promise = global.Promise
+mongoose.connect(mongoDB, { useNewUrlParser : true})
  .then(() =>{
      console.log("conexion realizada a la base de datos.")
  })

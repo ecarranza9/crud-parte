@@ -1,4 +1,4 @@
-  $(document).ready(function() {
+$(document).ready(function() {
 
     //Funcion fechant
     function compare_dates(fecha, fecha2)  
@@ -81,16 +81,7 @@
 
 //variables
 
-
-
-
-
-
 $('#form_fecha').submit(function(event) {
-
-  
-  
-
   var fecha = fechainput.value;
     var fecha2 = ClassFecha[i];
 
@@ -117,9 +108,36 @@ $('#form_fecha').submit(function(event) {
   
 
 })
-  
 
 
+const tareas = [
+
+  {cod:'RC' , descripcion:'Reparaciones en Campo'},
+  {cod:'TD' , descripcion:'Reparaciones en Taller (Sede)'},
+  {cod:'TR' , descriocion: 'Tareas Generales Taller (Sede'},
+  {cod:'IE' , descripcion: 'Instrucciones entregas cliente'},
+  {cod:'TT' , descripcion: 'Tiempo Translado'}
+
+]
+
+
+
+$('#form_part').submit(function(event){
+
+  event.preventDefault();
+
+  var form_interno = $('#form_interno').val();
+  var resultado = interno.find(inter => inter.cod === form_interno)
+   if(resultado == undefined){
+     alert("El interno no existe, por favor ingrese un interno de Sisbuso")
+   }
+   else{
+    $(this).off('submit').submit();
+   }
+
+
+
+})
 
 
 

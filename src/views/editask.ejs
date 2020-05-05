@@ -15,7 +15,7 @@
 
             <div class="card">
 
-               <form action="/listaks/edit/<%=id%>/<%=idTask%>" method="POST">
+               <form id="form_part" action="/listaks/edit/<%=id%>/<%=idTask%>" method="POST">
 
     <div class="form-group">
        <label for="">Orden de trabajo</label>
@@ -24,12 +24,19 @@
 
     <div class="form-group">
       <label for="">Interno</label>
-      <input type="text" name="interno"  class = "form-control" value="<%=tasks[0].interno%>">
+      <input id="form_interno" type="text" name="interno"  class = "form-control" value="<%=tasks[0].interno%>">
    </div>
 
    <div class="form-group">
       <label for="">Codigo de tarea</label>
-      <input type="text" name="cod"  class = "form-control" value="<%=tasks[0].cod%>">
+      <br>
+      <select name="cod" id="">
+         <option value="RC">RC - Reparaciones en campo</option>
+         <option value="TD">TD - Reparaciones en Taller (Sede)</option>
+         <option value="TR">TR - Tareas Generales Taller (Sede)</option>
+         <option value="IE">IE - Instrucciones entregas cliente</option>
+         <option value="TT">TT - Tiempo Translado</option>
+      </select>
    </div>
 
    <div class="form-group">
