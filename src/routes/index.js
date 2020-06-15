@@ -181,10 +181,10 @@ nuevo_part.user = req.user.id
                 msj: req.body
             });
         } else {
-            
             console.log(req.body);
-            req.flash('success_msg','Ok, has cargado un parte');
-            res.redirect('/tasks')
+            res.render('moretask',{
+            nuevo_part:nuevo_part}
+            )
             
                
             }

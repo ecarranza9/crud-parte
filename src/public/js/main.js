@@ -132,6 +132,7 @@ $('#form_part').submit(function(event){
      alert("El interno no existe, por favor ingrese un interno de Sisbuso")
    }
    else{
+    alert('Parte cargado con exito, agrega otro parte al mismo dia.')
     $(this).off('submit').submit();
    }
 
@@ -185,7 +186,5 @@ exportTableToExcel('tblData','ExportExcel')
 
 
 
-
-	
 });
     
