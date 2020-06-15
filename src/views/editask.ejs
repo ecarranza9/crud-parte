@@ -1,7 +1,8 @@
 <%- include ('partials/_header');  %> 
 
 <pre>
-    <%=console.log(tasks[0]._id)%>
+  <% const resultado = tasks.find(element => element._id == idTask)%>
+   <%console.log(resultado) %>
 </pre>
 
    
@@ -17,18 +18,15 @@
 
                <form id="form_part" action="/listaks/edit/<%=id%>/<%=idTask%>" method="POST">
 
-    <% for(task in tasks){ %>
-       <%console.log(task)%>
-    <%}%>
 
     <div class="form-group">
        <label for="">Orden de trabajo</label>
-       <input type="text" name="ot"  class = "form-control" value="<%=tasks[task].ot%>">
+       <input type="text" name="ot"  class = "form-control" value="<%=resultado.ot%>">
     </div>
 
     <div class="form-group">
       <label for="">Interno</label>
-      <input id="form_interno" type="text" name="interno"  class = "form-control" value="<%=tasks[task].interno%>">
+      <input id="form_interno" type="text" name="interno"  class = "form-control" value="<%=resultado.interno%>">
    </div>
 
    <div class="form-group">
@@ -45,12 +43,12 @@
 
    <div class="form-group">
       <label for="">Descripcion de tarea</label>
-      <input name="description" id="input_description" class="form-control" value="<%=tasks[task].description%>"></input>
+      <input name="description" id="input_description" class="form-control" value="<%=resultado.description%>"></input>
    </div>
 
    <div class="form-group">
       <label for="">Horas dedicadas </label>
-      <input type="float" name="hs"  class = "form-control" value="<%=tasks[task].hs%>" required>
+      <input type="float" name="hs"  class = "form-control" value="<%=resultado.hs%>" required>
    </div>
 
     
