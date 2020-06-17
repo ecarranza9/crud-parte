@@ -3,6 +3,7 @@
 const interno = [
 
     {cod:"91083",descripcion:"COMPLEJO MODULOS MILICIC (5 CONTENEDORES)"},
+    {cod:"s-i",descripcion:"Sin interno"},
     {cod:"91081",descripcion:"CONTAINER TALLER 12 MTS"},
     {cod:"91073",descripcion:"CONTAINER TALLER 12 MTS"},
     {cod:"91066",descripcion:"CONTAINER TALLER 12 MTS"},

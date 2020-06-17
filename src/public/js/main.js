@@ -113,10 +113,11 @@ $('#form_fecha').submit(function(event) {
 const tareas = [
 
   {cod:'RC' , descripcion:'Reparaciones en Campo'},
-  {cod:'TD' , descripcion:'Reparaciones en Taller (Sede)'},
-  {cod:'TR' , descriocion: 'Tareas Generales Taller (Sede'},
+  {cod:'RT' , descripcion:'Reparaciones en Taller (Sede)'},
+  {cod:'TG' , descriocion: 'Tareas Generales Taller (Sede'},
   {cod:'IE' , descripcion: 'Instrucciones entregas cliente'},
-  {cod:'TT' , descripcion: 'Tiempo Translado'}
+  {cod:'TT' , descripcion: 'Tiempo Translado'},
+  {cod:'VC' , descripcion: 'Visita de Cortesia'}
 
 ]
 
