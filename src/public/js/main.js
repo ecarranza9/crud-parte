@@ -6,19 +6,19 @@ $(document).ready(function() {
     if(fecha2 == null){
       return false
     }
-    var xMonth=fecha.substring(3, 5);  
-    var xDay=fecha.substring(0, 2);  
-    var xYear=fecha.substring(6,10);  
-    var yMonth=fecha2.substring(3, 5);  
-    var yDay=fecha2.substring(0, 2);  
-    var yYear=fecha2.substring(6,10);  
-    if (xYear == yYear)  
+    var xDay=fecha.substring(8, 10);
+    var xMonth=fecha.substring(5, 7);
+    var xYear=fecha.substring(0,4);
+    var yMonth=fecha2.substring(5, 7);  
+    var yDay=fecha2.substring(8, 10);  
+    var yYear=fecha2.substring(0,4);  
+    if (xDay == yDay)  
     {  
         return(true)  
     }  
     else  
     {  
-      if (xYear == yYear)  
+      if (xDay == yDay)  
       {   
         if (xMonth == yMonth)  
         {  
@@ -28,9 +28,9 @@ $(document).ready(function() {
         {   
           if (xMonth == yMonth)  
           {  
-            if (xDay == yDay)  
+            if (xYear == yYear)  
               return(true);  
-            else  
+            else 
               return(false);  
           }  
           else  
@@ -54,6 +54,8 @@ $(document).ready(function() {
    var hsExtTh = document.getElementById('hsExtTh');
    var hsExtTd = document.getElementById('hsExtTd');
    var fechainput = document.getElementById('fecha')
+   var fecha_actual = new Date().toJSON().slice(0,10).replace(/-/g,'-')
+  
  
   
 
@@ -84,19 +86,28 @@ $(document).ready(function() {
 $('#form_fecha').submit(function(event) {
   var fecha = fechainput.value;
     var fecha2 = ClassFecha[i];
+    
 
 //primero verifico que no haya ninguna fecha en la tabla de fechas
   if(fecha2 < 0){
     console.log("No hay fecha 2")
      $(this).off('submit').submit();
   }
+  
 
 //bucle para recorrer la tabla y comparar con la que se envia por el form
   
   for(var i=0; i < ClassFecha.length;i++){
     var fecha3 = ClassFecha[i].innerHTML
-    console.log(ClassFecha[i].innerHTML)
-    console.log(fechainput.value)
+    Date.parse(fecha3)
+    Date.parse(fecha_actual)
+   
+     
+    if(fecha3 == 0 || fecha_actual < fecha){
+      alert("Las fecha es mayor al dia de hoy");
+      event.preventDefault();
+      break;
+    }
     if(compare_dates(fecha, fecha3)){
       alert("Las fecha ya fue seleccionada, por favor seleccione otra");
       event.preventDefault();
@@ -140,8 +151,6 @@ $('#form_part').submit(function(event){
 
 
 })
-
-
 
 
 

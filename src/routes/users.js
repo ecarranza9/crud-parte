@@ -31,8 +31,11 @@ router.get('/users/signup', (req,res) =>{
 })
 
  router.post('/users/signup', async (req,res) => {
+
     const {usuario, password, confirm_password} = req.body;
     const errors = [];
+    
+
     if(usuario.length <= 0){
         errors.push({text:'Por favor, inserte un usuario.'})
     }
@@ -48,14 +51,50 @@ router.get('/users/signup', (req,res) =>{
     }else{
        const newUser = new User({usuario, password});
         newUser.password = await newUser.encryptPassword(password);
-        await newUser.save();
+        await newUser.save(function(err){
+            if(err){
+                errors.push({text:'El usuario ya ha sido registrado'})
+                res.render('users/signup', {
+                    err,errors,usuario,password, confirm_password})
+            } else{
+                req.flash('success_msg', 'Se ha registrado correctamente'); 
+                 res.redirect('/users/signin');     
+            }
+        });
         
-        req.flash('success_msg', 'Se ha registrado correctamente'); 
-        res.redirect('/users/signin');     
+       
            
     }   
 }
 )
+
+router.get('/users/resetpassword', (req,res) =>{
+    res.render('users/resetpass')
+})
+router.post('/users/resetpassword',async(req,res) =>{
+
+    const errors = []
+    console.log(req.body)
+    const newPassword = '1234'
+    const user = await User.findOne({usuario:req.body.usuario})
+    
+    if(user){
+    user.password = await user.encryptPassword(newPassword)
+
+    await user.save()
+
+    req.flash('success_msg', 'Se ha reseteado la password correctamente'); 
+    res.redirect('/users/signin');     
+} else{
+
+    errors.push({message:'Error en el usuario, no se ha podido reiniciar la contraseña'})
+    if(errors.length > 0){res.render('users/resetpassword', errors)}
+}
+
+   
+})
+
+
 
 router.get('/users/logout', (req, res) =>{
     req.logout();

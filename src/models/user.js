@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
  const UserSchema = new Schema({
 
-    usuario: {type: String, required: true},
+    usuario: {type: String, required: true, unique:true},
     password: {type: String, required: true},
     role: {
         type:String,
