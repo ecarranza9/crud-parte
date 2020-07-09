@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
-    //Funcion fechant
-    function compare_dates(fecha, fecha2)  
+  function compare_dates(fecha, fecha2)  
   {  
     if(fecha2 == null){
       return false
@@ -12,36 +11,18 @@ $(document).ready(function() {
     var yMonth=fecha2.substring(5, 7);  
     var yDay=fecha2.substring(8, 10);  
     var yYear=fecha2.substring(0,4);  
-    if (xDay == yDay)  
-    {  
-        return(true)  
-    }  
-    else  
-    {  
-      if (xDay == yDay)  
-      {   
-        if (xMonth == yMonth)  
-        {  
-            return(true)  
-        }  
-        else  
-        {   
-          if (xMonth == yMonth)  
-          {  
-            if (xYear == yYear)  
-              return(true);  
-            else 
-              return(false);  
-          }  
-          else  
-            return(false);  
-        }  
-      }  
-      else  
-        return(false);  
-    }  
-}  
-	
+
+    
+    console.log(xDay, xMonth, xYear);
+    console.log(yDay, yMonth, yYear);
+    
+    if(xDay == yDay && xMonth == yMonth && xYear == yYear){
+        return true
+    } else{
+        return false
+    }
+    
+}
    setTimeout(function() {
 
 	$('#error').fadeOut(2000);
@@ -109,7 +90,7 @@ $('#form_fecha').submit(function(event) {
       break;
     }
     if(compare_dates(fecha, fecha3)){
-      alert("Las fecha ya fue seleccionada, por favor seleccione otra");
+      alert("La fecha ya fue seleccionada, por favor seleccione otra");
       event.preventDefault();
       break;
     } 
