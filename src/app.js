@@ -6,10 +6,14 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
-
+const {Auth} = require('./api/middlewares/auth');
 
 
 const passport =require('passport');
+
+
+
+
 
 //importar rutas 
 
@@ -18,6 +22,11 @@ const userRouter = require('./routes/users');
 const adminRouter = require('./routes/admin')
 const app = express();
 require('./config/passport');
+
+//api import routes
+const partRouterApi = require('./api/routes/partRoutes');
+const userRouterApi = require('./api/routes/userRoutes');
+
 
 //var mongoDB = 'mongodb://localhost:27017/prueba'
 var mongoDB = process.env.MONGO_URI;
@@ -63,13 +72,14 @@ app.use(express.urlencoded({extended: false}) )
 
 app.use('/', indexRoutes);
 app.use(userRouter);
-app.use(adminRouter)
-
+app.use(adminRouter);
 
 //Static
 app.use(express.static(path.join(__dirname, 'public')))
 
-
+//api
+app.use('/api', userRouterApi); 
+app.use('/api',Auth, partRouterApi)
 
 
 //Servidor

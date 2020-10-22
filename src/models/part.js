@@ -5,7 +5,12 @@ const Schema = mongoose.Schema;
 
 const PartSchema = new Schema({
     user:{type:String},
-    fecha: {type: String, required:[true,'La fecha es requerida']},
+    fecha: {
+        type: String,
+        required:[true,'La fecha es requerida'],
+        unique: true
+    
+    },
     tasks: [{
      ot: String,
      interno: String,

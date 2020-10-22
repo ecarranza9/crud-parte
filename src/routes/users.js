@@ -10,7 +10,7 @@ router.get('/users/signin', (req,res) =>{
 })
 
 router.post('/users/signin', passport.authenticate('local',{
-    successRedirect:'/tasks',
+    successRedirect:'/tasks/1',
     failureRedirect:'/users/signin',
     failureFlash: true
 }

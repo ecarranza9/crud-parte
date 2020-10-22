@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
+
+
 
 
 //Rutas para acceder desde el navegador y ejecutar los distintos metodos (Funciona como controlador)
@@ -9,20 +10,12 @@ const mongoose = require('mongoose');
 
 const Part = require('../models/part');
 const { isAuthenticated }  = require('../helpers/auth');
-
-
-
-
-
-
-
+const { set } = require('mongoose');
 
 
 //primera ruta, la home
 
 router.get('/', (req, res) =>{
-
-    
     res.render('index',{   
     })
 })
@@ -32,10 +25,11 @@ router.get('/', (req, res) =>{
 
 //ruta task, una vez identificado el usuario
 
-router.get('/tasks', isAuthenticated, async (req,res) =>{
+router.get('/tasks/:page', isAuthenticated, async (req,res,next) =>{
     const err = 0;
+    var perPage = 4;
+    var page = req.params.page || 1;
     const {id} = req.params;
-    const parts =  await Part.find({user: req.user.id}).sort({'fecha': -1}) 
     const user = req.user
     
 
@@ -52,29 +46,41 @@ const horas = await Part.aggregate([
         
     ])
 
+    
 
+   const parts = await Part.find({user: req.user.id})
+    .skip((perPage*page) - perPage)
+    .limit(perPage)
+    .sort({'fecha': -1})
+    .exec(function(err,parts){
+       Part.count().exec(function(err,count){  
+        if(err) return next(err)
+        res.render('tasks', {
+            user:user,  
+            err:err,
+            parts:parts,
+            current:page,
+            horas:horas,
+            pages: Math.ceil(count/perPage)
+        })
 
+    }) 
 
+})
 
-
-    res.render('tasks', {
-        user:user,  
-        err:err,
-        parts:parts,
-        horas:horas 
-    })
+    
 })
 
 //agrego parte diario -
 
 router.post('/add', isAuthenticated, async (req,res) =>{
 
+    const err = 0;
+   
+
     const parts =  await Part.find({user: req.user.id}).sort({'fecha': -1})  
-    
-
-
     //Agrego el acumulador de horas, " en unwind coloco la coleccion de docu"
-const horas = await Part.aggregate([ 
+        const horas = await Part.aggregate([ 
         {$match:{ user : req.user.id}}, 
         {$unwind: {path: '$tasks',preserveNullAndEmptyArrays: true}},
         {$group: {
@@ -92,23 +98,27 @@ const horas = await Part.aggregate([
         fecha: req.body.fecha,
     })
 
-nuevo_part.user = req.user._id
+        nuevo_part.user = req.user._id
 
-await nuevo_part.save(function (err) {
+        await nuevo_part.save(function (err) {
 
-    if(err){
-        res.render('tasks', {err,parts,horas})
-    }else{
-        res.render('addtask', {
-            nuevo_part : nuevo_part,
+
+
+            if(err){
+                req.flash('error_msg','Debe ingresar una fecha')
+                res.redirect('/tasks/1')
+              
+            }else{
+                res.render('addtask', {
+                    nuevo_part : nuevo_part,
+                });
+
+            }
+
+
+
+
         });
-
-    }
-
-
-
-
-});
 
 
 
