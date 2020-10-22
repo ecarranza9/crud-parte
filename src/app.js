@@ -26,6 +26,7 @@ require('./config/passport');
 //api import routes
 const partRouterApi = require('./api/routes/partRoutes');
 const userRouterApi = require('./api/routes/userRoutes');
+const taskRouterApi = require('./api/routes/taskRoutes')
 
 
 //var mongoDB = 'mongodb://localhost:27017/prueba'
@@ -79,7 +80,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //api
 app.use('/api', userRouterApi); 
-app.use('/api',Auth, partRouterApi)
+app.use('/api',Auth, partRouterApi);
+app.use('/api',Auth, taskRouterApi);
 
 
 //Servidor

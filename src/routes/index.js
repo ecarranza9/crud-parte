@@ -53,7 +53,20 @@ const horas = await Part.aggregate([
     .limit(perPage)
     .sort({'fecha': -1})
     .exec(function(err,parts){
-       Part.count().exec(function(err,count){  
+    Part.count().exec(function(err,count){
+     Part.aggregate([ 
+            {$match:{ user : req.user.id}}, 
+            {$unwind: {path: '$tasks',preserveNullAndEmptyArrays: true}},
+            {$group: {
+                _id: "$fecha",
+                "total_horas": {$sum: "$tasks.hs" },
+                 
+            }},
+            {$sort:{_id: -1}}
+            
+        ]).then(horas => {
+            return horas
+        })
         if(err) return next(err)
         res.render('tasks', {
             user:user,  
@@ -245,7 +258,7 @@ router.get('/listaks/delete/:id/:idTask', isAuthenticated, async (req,res) => {
                 } else {
                     
                     console.log(req.body);
-                    res.redirect('/tasks')
+                    res.redirect('/tasks/1')
                     
                        
                     }
@@ -312,7 +325,7 @@ router.post('/listaks/edit/:id/:idTask', isAuthenticated, async(req,res)=>{
     } else {
         
         console.log(req.body);
-        res.redirect('/tasks')
+        res.redirect('/tasks/1')
         
            
         }
@@ -346,7 +359,7 @@ router.get('/tasks/:id', async(req,res) =>{
                   
             }
         }})
-        res.redirect('/tasks');
+        res.redirect('/tasks/1');
         
       
     })

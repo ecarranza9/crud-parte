@@ -4,16 +4,17 @@ const {getUserFromToken} = require('../middlewares/auth')
 
 
 async function getAllParts(req,res,next){
-    const err = 0;
-    const {id} = req.params;
-    const parts =  await Part.find({user: req.user.id}).sort({'fecha': -1}) 
-    const user = req.user
+    const decoded = await getUserFromToken(req.query.secret_token)
+    const user = decoded.id
+
+    const parts =  await Part.find({user: user}).sort({'fecha': -1}) 
     //Agrego el acumulador de horas, " en unwind coloco la coleccion de docu"
 const horas = await Part.aggregate([ 
-        {$match:{ user : req.user.id}}, 
+        {$match:{ user : user}}, 
         {$unwind: {path: '$tasks',preserveNullAndEmptyArrays: true}},
         {$group: {
-            _id: "$fecha",
+           
+            _id: "$_id",
             "total_horas": {$sum: "$tasks.hs" },
              
         }},
@@ -85,6 +86,27 @@ async function createPart(req,res,next){
 
 }
 
+    async function deletePart(req,res,next){
+        const decoded = await getUserFromToken(req.query.secret_token)
+        console.log(decoded);
+        const user = decoded.id
+        const {id} = req.params;
+
+        let part = await Part.findById(id);
+        if(!part){
+            return MessageHandler(res,{},"No se encontro el parte",404)
+        }
+
+        let deletePart = await Part.remove(part);
+        if(deletePart){
+            return MessageHandler(res,deletePart,"El parte ha sido eliminado",200)
+        }else{
+            return MessageHandler(res,{},"No se pudo eliminar el parte",404)
+        }
+
+
+
+    }
 
 
 
@@ -93,5 +115,6 @@ async function createPart(req,res,next){
 module.exports = {
     getAllParts,
     createPart,
-    updatePart
+    updatePart,
+    deletePart
 }
