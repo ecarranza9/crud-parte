@@ -25,7 +25,7 @@ router.get('/', (req, res) =>{
 
 //ruta task, una vez identificado el usuario
 
-router.get('/tasks/:page', isAuthenticated, async (req,res,next) =>{
+router.get('/tasks/page/:page', isAuthenticated, async (req,res,next) =>{
     const err = 0;
     var perPage = 4;
     var page = req.params.page || 1;
@@ -119,7 +119,7 @@ router.post('/add', isAuthenticated, async (req,res) =>{
 
             if(err){
                 req.flash('error_msg','Debe ingresar una fecha')
-                res.redirect('/tasks/1')
+                res.redirect('/tasks/page/1')
               
             }else{
                 res.render('addtask', {
@@ -144,7 +144,7 @@ router.post('/add', isAuthenticated, async (req,res) =>{
 router.get('/tasks/delete/:id', async(req,res) =>{
     const { id } = req.params;
     await Part.remove({_id: id});
-    res.redirect('/tasks')
+    res.redirect('/tasks/page/1')
 })
 
 
@@ -258,7 +258,7 @@ router.get('/listaks/delete/:id/:idTask', isAuthenticated, async (req,res) => {
                 } else {
                     
                     console.log(req.body);
-                    res.redirect('/tasks/1')
+                    res.redirect('/tasks/page/1')
                     
                        
                     }
@@ -322,20 +322,13 @@ router.post('/listaks/edit/:id/:idTask', isAuthenticated, async(req,res)=>{
             success: false,
             msj: req.body
         });
-    } else {
-        
+    } else {        
         console.log(req.body);
-        res.redirect('/tasks/1')
-        
-           
+        res.redirect('/tasks/page/1')
         }
         
     }
 
-
-
-    
-    
     )
 })
 
@@ -343,9 +336,8 @@ router.post('/listaks/edit/:id/:idTask', isAuthenticated, async(req,res)=>{
 router.get('/tasks/:id', async(req,res) =>{
     const{ id } = req.params;
     const part = await Part.findById(id);
-    
     res.render('edit', {
-        part:part
+        part:part,
     });
 })
     
@@ -359,7 +351,7 @@ router.get('/tasks/:id', async(req,res) =>{
                   
             }
         }})
-        res.redirect('/tasks/1');
+        res.redirect('/tasks/page/1');
         
       
     })
