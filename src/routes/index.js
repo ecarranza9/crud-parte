@@ -54,6 +54,7 @@ const horas = await Part.aggregate([
     .sort({'fecha': -1})
     .exec(function(err,parts){
     Part.count().exec(function(err,count){
+        console.log(count)
      Part.aggregate([ 
             {$match:{ user : req.user.id}}, 
             {$unwind: {path: '$tasks',preserveNullAndEmptyArrays: true}},
