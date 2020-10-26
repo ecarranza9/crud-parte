@@ -53,7 +53,7 @@ const horas = await Part.aggregate([
     .limit(perPage)
     .sort({'fecha': -1})
     .exec(function(err,parts){
-    Part.count().exec(function(err,count){
+    Part.find({user:req.user.id}).count().exec(function(err,count){
         console.log(count)
      Part.aggregate([ 
             {$match:{ user : req.user.id}}, 
